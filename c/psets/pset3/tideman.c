@@ -1,5 +1,6 @@
 #include <cs50.h>
 #include <stdio.h>
+#include <string.h>
 
 // Max number of candidates
 #define MAX 9
@@ -99,22 +100,68 @@ int main(int argc, string argv[])
 // Update ranks given a new vote
 bool vote(int rank, string name, int ranks[])
 {
-    // TODO
+    // Iterate through candidates array to ensure given name is a valid candidate
+    for (int i = 0; i < candidate_count; i++)
+    {
+        if (strcmp(candidates[i], name) == 0)
+        { 
+            // Update ranks array to indicate that the voter has the candidate as their 'rank' preference
+            ranks[rank] = i;
+
+            return true;
+        }
+    }
+
     return false;
 }
 
 // Update preferences given one voter's ranks
 void record_preferences(int ranks[])
 {
-    // TODO
-    return;
+    // Iterate through ranks array
+    for (int i = 0; i < candidate_count; i++)
+    {
+        // Iterate through ranks array again - compare each canidate to every other
+        for (int j = 0; j < candidate_count; j++)
+        {
+            // if the index of i is lower than the index of j
+            if (i < j)
+            {
+                // update the preferences global array such that preferences[i][j] represents the number of voters than preference candidate i over candidate j
+                preferences[i][j]++;
+            }
+        }
+    }
 }
 
 // Record pairs of candidates where one is preferred over the other
 void add_pairs(void)
 {
-    // TODO
-    return;
+    // Iterate through preferences two-dimensional array, i
+    for (int i = 0; i < candidate_count; i++)
+    {
+        // Iterate through preferences two-dimensional array, j
+        for (int j = 0; j < candidate_count; j++)
+        {
+            // If one of the candidates is more preferred
+            if (preferences[i][j] > preferences[j][i])
+            {
+                // Add the pair to the 'pairs' array
+                pairs[pair_count].winner = i;
+                pairs[pair_count].loser = j;
+                // Update global variable pair_count
+                pair_count++;
+            }
+            else if (preferences[j][i] > preferences[i][j])
+            {
+                // Add the pair to the 'pairs' array
+                pairs[pair_count].winner = j;
+                pairs[pair_count].loser = i;
+                // Update global variable pair_count
+                pair_count++;
+            }
+        }
+    }
 }
 
 // Sort pairs in decreasing order by strength of victory
