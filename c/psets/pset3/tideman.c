@@ -167,8 +167,13 @@ void add_pairs(void)
 // Sort pairs in decreasing order by strength of victory
 void sort_pairs(void)
 {
-    // TODO
-    return;
+    // Instantiate variable = 0
+
+    // Iterate through pairs array
+
+        // Use pair struct winner and loser to determine index of preferences array
+
+        // if the 
 }
 
 // Lock pairs into the candidate graph in order, without creating cycles
