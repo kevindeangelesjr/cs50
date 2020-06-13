@@ -31,6 +31,19 @@ int main(int argc, string argv[])
         }
     }
 
+    // Make sure there are no duplicate charactes in the provided key
+    for (int i = 0; i < key_len; i++)
+    {
+        for (int j = i + 1; j < key_len; j++)
+        {
+            if (key[i] == key[j])
+            {
+                printf("Key must not contain duplicate characters.\n");
+                return 1;
+            }
+        }
+    }
+
     // Get plaintext to encrypt
     string plaintext = get_string("plaintext: ");
     int plaintext_len = strlen(plaintext);
