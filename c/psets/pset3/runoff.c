@@ -157,7 +157,7 @@ void tabulate(void)
 
         if (candidates[preferred_candidate].eliminated == true)
         {
-            return;
+            continue;
         }
         else
         {
@@ -177,7 +177,7 @@ bool print_winner(void)
     for (int i = 0; i < candidate_count; i++)
     {
         // If they have enough votes to win, print name to stdout
-        if (candidates[i].votes >= majority_vote)
+        if (candidates[i].votes > majority_vote)
         {
             printf("%s\n", candidates[i].name);
             // return true
