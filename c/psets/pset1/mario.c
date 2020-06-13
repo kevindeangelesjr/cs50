@@ -13,7 +13,7 @@ int main(void)
     for (int counter = 0; counter < height; counter++)
     {
         int space_counter = 0;
-        while (space_counter < height - counter)
+        while (space_counter < height - counter - 1)
         {
             printf(" ");
             space_counter++;
@@ -32,13 +32,6 @@ int main(void)
             printf("#");
         }
         
-        space_counter = 0;
-        while (space_counter < height - counter)
-        {
-            printf(" ");
-            space_counter++;
-        }
-
         printf("\n");
     }
 }
