@@ -6,6 +6,7 @@
 #include <string.h>
 #include <strings.h>
 #include <ctype.h>
+#include <unistd.h>
 #include "dictionary.h"
 
 // Represents a node in a hash table
@@ -31,28 +32,29 @@ bool check(const char *word)
     // Get hash index for the current dictionary word
     unsigned int hashIndex = hash(word);
 
-    // Create a temporary node called cursor to iterate over linked list at this index
-    node *cursor = table[hashIndex];
+    node *cursor = malloc(sizeof(node));
     if (cursor == NULL)
     {
         return false;
     }
 
-    // Move through linked list until you hit the end
-    while (cursor != NULL)
+    cursor->next = table[hashIndex];
+
+    while (cursor->next != NULL)
     {
-        // Compare the word value of the current node in the linked list to word passed to the function
-        // If it matches, return true
+        
         if (strcasecmp(cursor->word, word) == 0)
         {
+            free(cursor);
             return true;
         }
-
-        // Move to temporary node to the next node in the linked list
-        cursor = cursor->next; 
+        else
+        {
+            cursor = cursor->next;
+        }   
     } 
-    
-    // We've hit the end of the linked list at this index of the hash table and haven't found the word.  Return false
+
+    free(cursor);
     return false;
 }
 
@@ -85,8 +87,7 @@ bool load(const char *dictionary)
         return false;
     }
 
-    // Buffer for each word of the dictionary
-    char *word = malloc(LENGTH + 1);
+    char *word = malloc(LENGTH);
 
     // Read each line of the dictionary file
     while (fscanf(dictFile, "%s", word) != EOF)
@@ -107,9 +108,15 @@ bool load(const char *dictionary)
         // Get has index for the current dictionary word
         unsigned int hashIndex = hash(word);
 
-        // Add the new node to the beginning of the linked list at the current index of the hash table
-        n->next = table[hashIndex];
-        table[hashIndex] = n;
+        if (table[hashIndex] == NULL)
+        {
+            table[hashIndex] = n;
+        }
+        else
+        {
+            n->next = table[hashIndex]->next;
+            table[hashIndex]->next = n;
+        }
     } 
 
     fclose(dictFile);
@@ -126,27 +133,23 @@ unsigned int size(void)
 // Unloads dictionary from memory, returning true if successful else false
 bool unload(void)
 {
-    // Iterate through each index of the hashtable
+    node *cursor = malloc(sizeof(node));
+    node *tmp = malloc(sizeof(node));
+
+    // Free list
     for (int i = 0; i < N; i ++)
     {
-        // Create temporary node cursor
-        node *cursor = table[i];
+        cursor-> next = table[i];
 
-        // Move through linked list at this index until the end
-        while (cursor != NULL)
+        while (cursor->next != NULL)
         {
-            // Create second temporary node tmp, set to same value as cursor
-            // This will be used for clearing, cursor will point to the next node so as to not lose place
-            node *tmp = cursor;
-
-            // Move cursor to the next node in the linked list
+            tmp = cursor;
             cursor = cursor->next;   
-
-            // Free the node at tmp
             free(tmp);
         }
-        free(cursor);
-    }
+    } 
 
+    free(cursor);
+    free(tmp);
     return true;
 }
