@@ -6,4 +6,6 @@ while height <= 0 or height > 8:
 for i in range(height):
     print(" " * (height-i-1), end="")
     print("#" * (i+1), end="")
+    print(" " * 2, end="")
+    print("#" * (i+1), end="")
     print()
