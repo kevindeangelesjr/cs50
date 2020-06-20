@@ -1,0 +1,32 @@
+SELECT title FROM favorites ORDER BY title;
+SELECT title, COUNT(title) FROM favorites GROUP BY title;
+SELECT title, COUNT(title) FROM favorites GROUP BY title LIMIT 10;
+SELECT title, COUNT(title) AS n FROM favorites GROUP BY title LIMIT 10;
+SELECT title, COUNT(title) AS n FROM favorites GROUP BY title ORDER BY n DESC LIMIT 10;
+
+Operations:
+INSERT
+SELECT
+UPDATE
+DELETE
+
+Data Types:
+BLOB
+INTEGER
+    smallint
+    integer
+    bigint
+NUMERIC
+    boolean
+    date
+    datetime
+    numeric(scale, precision)
+    time
+    timestamp
+REAL
+    real
+    double precision
+TEXT
+    char(n)
+    varchar(n)
+    text
