@@ -20,14 +20,23 @@ elif [ $# -gt 2 ]; then
     exit 1
 fi
 
-if [ ! -f "$FILE" ]; then
-    echo "Provided argument $FILE not a file"
-    exit 1
+if [ $FILE = "all" ]; then
+    ### Deploy all files to webserver path
+    echo "Copying all files in current direcotry to $DEPLOY_PATH ..."
+    cp ./* $DEPLOY_PATH/
+
+else
+    if [ ! -f "$FILE" ]; then
+        echo "Provided argument $FILE not a file"
+        exit 1
+    fi
+
+    ### Deploy specified file to webserver path
+    echo "Copying $FILE to $DEPLOY_PATH/$DEPLOY_FILE ... "
+    cp $FILE $DEPLOY_PATH/$DEPLOY_FILE
 fi
 
-### Deploy file to webserver path
-echo "Copying $FILE to $DEPLOY_PATH/$DEPLOY_FILE ... "
-cp $FILE $DEPLOY_PATH/$DEPLOY_FILE
+chmod 755 $DEPLOY_PATH/
 
 ### Restart httpd service
 echo "Reloading httpd ... "
