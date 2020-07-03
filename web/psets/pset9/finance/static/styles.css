@@ -45,3 +45,19 @@ main img
     /* constrain images on small screens */
     max-width: 100%;
 }
+
+table, th, td
+{
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th, td 
+{
+    padding: 15px;
+}
+
+th
+{
+    background-color: #E0E0E0;
+}

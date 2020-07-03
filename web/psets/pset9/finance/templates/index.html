@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Holdings
+{% endblock %}
+
+{% block main %}
+    <h1>Holdings</h1>
+    <br>
+    <a class="btn btn-primary" href="/buy" role="button">Buy</a>
+    <a class="btn btn-primary" href="/sell" role="button">Sell</a>
+    <br>
+    <br>
+    <table style="width:100%">
+        <tr>
+          <th>Symbol</th>
+          <th>Company</th>
+          <th>Shares</th>
+          <th>Current Price</th>
+          <th>Value of Holding</th>
+        </tr>
+    {% for holding in holdings_info %}
+        <tr>
+            <td>{{ holding.symbol }}</td>
+            <td>{{ holding.name }}</td>
+            <td>{{ holding.shares }}</td>
+            <td>{{ holding.price }}</td>
+            <td>{{ holding.value }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    <br>
+    <h3>Cash:</h3>
+    <h5>{{ cash }}</h5>
+    <br>
+    <a class="btn btn-primary" href="/addcash" role="button">Add Cash</a>
+    <br>
+    <br>
+    <h3>Grand Total (Cash + Holdings Value):</h3>
+    <h5>{{ total_value}}</h5>
+    <br>
+{% endblock %}

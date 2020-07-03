@@ -1,6 +1,7 @@
 import os
 import requests
 import urllib.parse
+import re
 
 from flask import redirect, render_template, request, session
 from functools import wraps
@@ -61,3 +62,11 @@ def lookup(symbol):
 def usd(value):
     """Format value as USD."""
     return f"${value:,.2f}"
+
+def complexity_check(password):
+    """Enforces password complexity.  Must be at least 8 characters long and contain at least one number and one letter"""
+
+    if len(password) >= 8 and (re.search(r'\d', password)) and re.search('[a-zA-Z]', password):
+        return True
+    else:
+        return False
