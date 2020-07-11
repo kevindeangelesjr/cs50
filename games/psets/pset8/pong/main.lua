@@ -98,6 +98,7 @@ function love.load()
     player1 = Paddle(10, 30, 5, 20)
     player2 = Paddle(VIRTUAL_WIDTH - 15, VIRTUAL_HEIGHT - 30, 5, 20)
     ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 4, 4)
+    offset = 0
 
     gameState = 'start'
 end
@@ -211,14 +212,18 @@ function love.update(dt)
         player1.dy = 0
     end
 
+    -- Disabling, as player 2 will be AI
     -- player 2 movement
-    if love.keyboard.isDown('up') then
-        player2.dy = -PADDLE_SPEED
-    elseif love.keyboard.isDown('down') then
-        player2.dy = PADDLE_SPEED
-    else
-        player2.dy = 0
-    end
+    --if love.keyboard.isDown('up') then
+    --    player2.dy = -PADDLE_SPEED
+    --elseif love.keyboard.isDown('down') then
+    --    player2.dy = PADDLE_SPEED
+    --else
+    --    player2.dy = 0
+    --end
+
+    -- player 2 AI
+    player2.y = ball.y + offset
 
     -- update our ball based on its DX and DY only if we're in play state;
     -- scale the velocity by dt so movement is framerate-independent
@@ -245,6 +250,14 @@ function love.keypressed(key)
             gameState = 'serve'
         elseif gameState == 'serve' then
             gameState = 'play'
+            
+            -- AI has a 1 in 5 chance of receiving a small offset of 3 on the x axis, which makes it possible to beat
+            chance = math.random(1, 5)
+
+            if chance == 1 then
+                offset = 3
+            end
+
         elseif gameState == 'done' then
             -- game is simply in a restart phase here, but will set the serving
             -- player to the opponent of whomever won for fairness!
