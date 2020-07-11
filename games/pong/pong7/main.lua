@@ -1,3 +1,10 @@
+-- import another lua libraries and classes
+Class = require 'class'
+push = require 'push'
+require 'Paddle'
+require 'Ball'
+
+-- Window settings
 WINDOW_WIDTH = 1280
 WINDOW_HEIGHT = 720
 
@@ -5,13 +12,16 @@ WINDOW_HEIGHT = 720
 VIRTUAL_WIDTH = 432
 VIRTUAL_HEIGHT = 243
 
+-- Speed at which paddle will move
 PADDLE_SPEED = 200
--- import another lua file
-push = require 'push'
 
 -- Required in every Love game
 function love.load()
+
+    love.window.setTitle('Pong')
+
     math.randomseed(os.time())
+
     love.graphics.setDefaultFilter('nearest', 'nearest')    -- get rid of filter
 
     -- Create object with new font (file in directory).  8 pixel size
@@ -25,42 +35,67 @@ function love.load()
         resizable = false
     })
 
-    -- Paddles
     player1Score = 0
     player2Score = 0
 
-    player1Y = 30
-    player2Y = VIRTUAL_HEIGHT - 40
+    -- Construct Paddles
+    player1 = Paddle(5, 20, 5, 20)
+    player2 = Paddle(VIRTUAL_WIDTH - 10, VIRTUAL_HEIGHT - 30, 5, 20)
 
-    -- Ball 
-    ballX = VIRTUAL_WIDTH / 2 - 2
-    ballY = VIRTUAL_HEIGHT / 2 - 2
-
-    -- Ball velocity
-    ballDX = math.random(2) == 1 and -100 or 100
-    ballDY = math.random(-50, 50)
+    -- Construct ball
+    ball = Ball(VIRTUAL_WIDTH / 2 - 2, VIRTUAL_HEIGHT / 2 - 2, 5, 5)
 
     gameState = 'start'
 end
 
 function love.update(dt)
+
+    -- collision detection
+    if ball:collides(player1) then
+        -- deflect ball to the right
+        ball.dx = -ball.dx
+    end
+
+    if ball:collides(player2) then
+        -- deflect ball to the left
+        ball.dx = -ball.dx
+    end
+
+    if ball.y <= 0 then
+        -- deflect the ball down
+        ball.dy = -ball.dy
+        ball.y = 0
+    end
+
+    if ball.y >= VIRTUAL_HEIGHT - 4 then
+        -- deflect the ball up
+        ball.dy = -ball.dy
+        ball.y = VIRTUAL_HEIGHT - 4
+    end
+
     -- PLayer 1 paddle
     if love.keyboard.isDown('w') then
-        player1Y = math.max(0, player1Y - PADDLE_SPEED * dt)
+        player1.dy = -PADDLE_SPEED
     elseif love.keyboard.isDown('s') then
-        player1Y = math.min(VIRTUAL_HEIGHT - 20, player1Y + PADDLE_SPEED * dt)
+        player1.dy = PADDLE_SPEED
+    else
+        player1.dy = 0
     end
 
     -- Player 2 paddle
     if love.keyboard.isDown('up') then
-        player2Y = math.max(0, player2Y - PADDLE_SPEED * dt)
+        player2.dy = -PADDLE_SPEED
     elseif love.keyboard.isDown('down') then
-        player2Y = math.min(VIRTUAL_HEIGHT - 20, player2Y + PADDLE_SPEED * dt)
+        player2.dy = PADDLE_SPEED
+    else
+        player2.dy = 0
     end
 
+    player1:update(dt)
+    player2:update(dt)
+
     if gameState == 'play' then
-        ballX = ballX + ballDX *dt
-        ballY = ballY + ballDY *dt
+        ball:update(dt)
     end
 end
 
@@ -72,12 +107,7 @@ function love.keypressed(key)
             gameState = 'play'
         elseif gameState == 'play' then
             gameState = 'start'
-
-            -- Set ball back to default values
-            ballX = VIRTUAL_WIDTH / 2 - 2
-            ballY = VIRTUAL_HEIGHT / 2 - 2
-            ballDX = math.random(2) == 1 and -100 or 100
-            ballDY = math.random(-50, 50)
+            ball:reset()
         end
     end
 end
@@ -89,15 +119,6 @@ function love.draw()
     -- / by 255 bc Lua wants number betwen 0.0 - 1.0 for RGBA values.  / 255 converts from normal RGB
     love.graphics.clear(40 / 255, 45 / 255, 52 / 255, 255 / 255)
 
-    -- Draw the ball, 5 x 5 pixels
-    love.graphics.rectangle('fill', ballX, ballY, 4, 4)
-
-    -- Draw left paddle
-    love.graphics.rectangle('fill', 5, player1Y, 5, 20)
-
-    -- Draw right paddle
-    love.graphics.rectangle('fill', VIRTUAL_WIDTH - 10, player2Y, 5, 20)
-
     love.graphics.setFont(smallFont)
     if gameState == 'start' then
         love.graphics.printf("Hello Start State!", 0, 20, VIRTUAL_WIDTH, 'center')
@@ -105,9 +126,25 @@ function love.draw()
         love.graphics.printf("Hello Play State!", 0, 20, VIRTUAL_WIDTH, 'center')
     end
 
+    -- Render ball
+    ball:render()
+    -- Render left paddle
+    player1:render()
+    -- Render right paddle
+    player2:render()
+
     love.graphics.setFont(scoreFont)
     love.graphics.print(player1Score, VIRTUAL_WIDTH / 2 - 50, VIRTUAL_HEIGHT / 3)
     love.graphics.print(player2Score, VIRTUAL_WIDTH / 2 + 30, VIRTUAL_HEIGHT / 3)
 
+    displayFPS()
+
     push:apply('end')
+end
+
+function displayFPS()
+    love.graphics.setColor(0, 1, 0, 1)
+    love.graphics.setFont(smallFont)
+    love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 40, 20)
+    love.graphics.setColor(1, 1, 1, 1)
 end
