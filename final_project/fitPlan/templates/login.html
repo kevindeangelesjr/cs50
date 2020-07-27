@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    fitPlan | Log In
+{% endblock %}
+
+{% block body %}
+<div id="form-box">
+    <h1 id="register-title">Log In</h1>
+    <form action="/login" method="post" id="register-form">
+        <div><input autofocus class="register-field" name="username" placeholder="Username" type="text"></div>
+        <div><input class="register-field" name="password" placeholder="Password" type="password"></div>
+        <div><button class="btn gray-btn btn-lg" type="submit">Log In</button></div>
+    </form>
+</div>
+{% endblock %}

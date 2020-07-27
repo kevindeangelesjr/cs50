@@ -1,0 +1,35 @@
+.page-background {
+    background-color: #D8DAD3;
+    text-align: center;
+    padding: 20px;
+}
+
+.register-field {
+    margin-bottom: 20px;
+    width: auto;
+    font-size:12pt;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    padding: 5px;
+}
+
+.gray-btn {
+    background-color: #4A4A48;
+    color: white;
+}
+
+#register-title {
+    font-size: 32pt;
+    padding-bottom: 20px;
+}
+
+#form-box {
+    background-color: #A4C2A5;
+    margin: auto;
+    width: 400px;
+    height: 600px;
+    padding-top: 10%;
+    padding-bottom: 10%;
+    box-shadow: 10px 10px 5px grey;
+}
