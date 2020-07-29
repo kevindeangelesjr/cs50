@@ -1,11 +1,11 @@
 .logo {
-    font-family: 'Cairo', sans-serif;
+    font-family: 'Oswald', sans-serif;
     color: white;
     size: 20pt;
 }
 
 .logo-font {
-    font-family: 'Cairo', sans-serif;
+    font-family: 'Oswald', sans-serif;
 }
 
 .page-background {
@@ -39,6 +39,7 @@
 .gray-btn {
     background-color: #45504D;
     color: white;
+    box-shadow: 10px 10px 8px #888888;
 }
 
 #register-title {
@@ -47,6 +48,7 @@
 
 #main-title {
     color: white;
+    text-shadow: 2px 2px 4px #000000;
 }
 
 #form-box {
@@ -65,8 +67,16 @@
 #public-jumbotron {
     background-color: #B5B6B0;
     padding: 20px;
+    margin-bottom: 0px;
     opacity: 0.9;
     text-align: left;
+    box-shadow: 10px 10px 8px #888888;
+}
+
+#overlay-square {
+    background-color: lightblue;
+    opacity: 0.9;
+    padding: 2%;
 }
 
 .white-text {
@@ -87,7 +97,8 @@
 }
 
 .overview-card {
-    background-color: #B5B6B0;
+    background-color: lightblue;
+    box-shadow: 10px 10px 8px #888888;
     height: 50%;
     width: 50%;
 }
