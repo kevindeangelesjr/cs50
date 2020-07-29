@@ -1,16 +1,18 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    fitPlan | Log In
+    Fitscape | Log In
 {% endblock %}
 
 {% block body %}
 <div id="form-box">
-    <h1 id="register-title">Log In</h1>
+    <h3 class="logo-font white-text">Fitscape</h3>
+    <h1 class="white-text" id="register-title">Log In</h1>
     <form action="/login" method="post" id="register-form">
-        <div><input autofocus class="register-field" name="username" placeholder="Username" type="text"></div>
-        <div><input class="register-field" name="password" placeholder="Password" type="password"></div>
-        <div><button class="btn gray-btn btn-lg" type="submit">Log In</button></div>
+        <input autofocus class="register-field" name="username" placeholder="Username" type="text">
+        <input class="register-field" name="password" placeholder="Password" type="password">
+        <button class="btn gray-btn btn-lg" type="submit">Log In</button>
+        <input class="btn gray-btn btn-lg" type="button" value="Go Back" onclick="history.back(-1)" />
     </form>
 </div>
 {% endblock %}

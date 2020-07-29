@@ -1,9 +1,15 @@
-{% extends "layout.html" %}
+{% extends "authenticated-layout.html" %}
 
 {% block title %}
-    fitPlan | Home
+    Fitscape | Home
 {% endblock %}
 
 {% block body %}
-    Welcome Home
+<div id="home-page">
+    <h1 class="logo-font">Overview</h1>
+    <div id="home-page-container">
+        <div class="overview-card">Nutrition Overview</div>
+        <div class="overview-card">Excercise Overview</div>
+    </div>
+</div>
 {% endblock %}

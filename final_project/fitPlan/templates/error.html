@@ -1,12 +1,14 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    fitPlan | Error!
+    Fitscape | Error!
 {% endblock %}
 
 {% block body %}
 <div id="form-box">
-    <h1 id="register-title">{{ code }} Error</h1>
-    <h3>{{ message }}</h3>
+    <h3 class="logo-font white-text">Fitscape</h3>
+    <h1 class="error-text white-text" id="register-title">{{ code }} Error</h1>
+    <h3 class="error-text white-text">{{ message }}</h3>
+    <input class="btn gray-btn btn-lg" type="button" value="Go Back" onclick="history.back(-1)" />
 </div>
 {% endblock %}

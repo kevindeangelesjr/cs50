@@ -1,27 +1,16 @@
-<!DOCTYPE html>
+{% extends "layout.html" %}
 
-<html lang="en">
+{% block title %}
+    Fitscape | Welcome
+{% endblock %}
 
-    <head>
-    
-        <title>fitPlan | Welcome</title>
-        
-        <link href="/static/public-styles.css" rel="stylesheet">
-        <!-- Styles from Bootstrap -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
-    
-    </head>
-
-    <body id="public-page">
-
-        <!-- Bootstrap jumbotron -->
-        <div class="jumbotron" id="public-jumbotron">
-            <h1>Welcome to fitPlan!</h1>
-            <p>Helping you reach fitness goals through nutrition and excercise tracking</p>
-            <p><a class="public-button btn btn-lg" href="/login" role="button">Log In</a></p>
-            <p><a class="public-button btn btn-lg" href="/register" role="button">Register</a></p>
-          </div>
-
-    </body>
-
-</html>
+{% block body %}
+    <!-- Bootstrap jumbotron -->
+    <div class="jumbotron" id="public-jumbotron">
+        <h1 id="main-title" class="logo-font">Welcome to Fitscape Planner</h1>
+        <p class="white-text">Helping you reach fitness goals through nutrition and excercise tracking</p>
+        <p><a class="gray-btn btn btn-lg" href="/login" role="button">Log In</a></p>
+        <p><a class="gray-btn btn btn-lg" href="/register" role="button">Register</a></p>
+      </div>
+    </div>
+{% endblock %}

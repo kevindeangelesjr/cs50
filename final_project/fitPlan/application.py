@@ -5,6 +5,7 @@ import os
 from tempfile import mkdtemp
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.security import check_password_hash, generate_password_hash
+from helpers import login_required
 
 ### Application database
 db = "fitPlan.db"
@@ -117,9 +118,6 @@ def register():
                 
         ### Insert into users table in DB
         c.execute("INSERT INTO users (username, hash) VALUES(?,?)", (username, hash))
-
-        ### Create new tables to track the user's data
-
         conn.commit()
         conn.close()
 
@@ -132,6 +130,54 @@ def success():
     return render_template("success.html")
 
 
+@app.route("/logout")
+def logout():
+    """Log user out"""
+
+    # Forget any user_id
+    session.clear()
+
+    # Redirect user to login form
+    return redirect("/")
+
+
 @app.route("/home")
+@login_required
 def home():
     return render_template("home.html")
+
+
+@app.route("/meal-plan")
+@login_required
+def meal_plan():
+    return render_template("meal-plan.html")
+
+
+@app.route("/meal-track")
+@login_required
+def meal_track():
+    return render_template("meal-track.html")
+
+
+@app.route("/meal-browse")
+@login_required
+def meal_browse():
+    return render_template("meal-browse.html")
+
+
+@app.route("/workout-plan")
+@login_required
+def workout_plan():
+    return render_template("workout-plan.html")
+
+
+@app.route("/workout-track")
+@login_required
+def workout_track():
+    return render_template("workout-track.html")
+
+
+@app.route("/workout-browse")
+@login_required
+def workout_browse():
+    return render_template("workout-browse.html")
